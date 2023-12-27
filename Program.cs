@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata.Ecma335;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,7 +59,7 @@ app.MapPut("/tarefas/{id}", async (TarefasContext db, int id, Tarefa tarefa) =>
 
     tarefaExistente.Titulo = tarefa.Titulo;
     tarefaExistente.Descricao = tarefa.Descricao;
-    tarefaExistente.DataConclusao = tarefa.DataConclusao;
+    tarefaExistente.DataAlteracao = DateTime.Now;
     tarefaExistente.Concluida = tarefa.Concluida;
 
     await db.SaveChangesAsync();
@@ -90,8 +89,9 @@ class Tarefa
     public int Id { get; set; }
     public string? Titulo { get; set; }
     public string? Descricao { get; set; }
-    public DateTime DataCriacao { get; set; } = DateTime.Now;
-    public DateTime DataConclusao { get; set; } = DateTime.Now.AddDays(7);
+    public DateTime? DataCriacao { get; set; } = DateTime.Now;
+    public DateTime? DataConclusao { get; set; } = DateTime.Now.AddDays(7);
+    public DateTime? DataAlteracao { get; set; } = DateTime.Now;
     public bool Concluida { get; set; } = false;
 }
 
